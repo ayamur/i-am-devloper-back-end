@@ -40,9 +40,12 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       references: {
         model: 'Profiles',
-        key: 'id',
+        key: 'id'
       }
     },
+  }, {
+    sequelize,
+    modelName: 'Reaction',
   });
   return Reaction;
 };
