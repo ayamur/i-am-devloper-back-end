@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'postId',
       })
 
-      Profile.hasMany(models.Reactions, {
+      Profile.hasMany(models.Reaction, {
         as: 'reactionsReceived',
         foreignKey: 'reactionId',
       })
