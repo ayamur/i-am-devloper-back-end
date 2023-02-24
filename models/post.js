@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: 'Untitled',
-      comment: 'The title of the image post'
   },
     profileId: {
       type: DataTypes.INTEGER,
