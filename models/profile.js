@@ -10,6 +10,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Profile.belongsTo(models.User, { foreignKey: 'userId' })
+
+      Profile.hasMany(models.Post, {
+        as: 'postsMade',
+        foreignKey: 'postId',
+      })
+
+      Profile.hasMany(models.Reactions, {
+        as: 'reactionsReceived',
+        foreignKey: 'reactionId',
+      })
+
     }
   }
 
