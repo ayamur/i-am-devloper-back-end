@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 const {
   Model
-} = require('sequelize');
+} = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Post extends Model {
     /**
@@ -10,40 +10,28 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Post.belongsTo(models.Profile,{foreignKey: 'profileId'})
     }
   }
   Post.init({
-    title: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: 'Untitled',
-  },
     profileId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      onDelete: 'CASCADE',
-      references: {
-        model: 'Profiles',
-        key: 'id',
-      },
-    },
-    reactorId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      onDelete: 'CASCADE',
-      references: {
-        model: 'Profiles',
-        key: 'id',
-      }
-    },
-    imageUrl: { 
-      type: DataTypes.STRING,
-      allowNull: false,
-      }
+    allowNull: false,
+    onDelete: 'CASCADE',
+    references: {
+      model:'Profiles',
+      key: 'id',
+    }
+  }, 
+  image: {
+    type: DataTypes.STRING
+  },
+  caption: {
+    type: DataTypes.STRING
+  }
   }, {
     sequelize,
     modelName: 'Post',
-  });
-  return Post;
-};
+  })
+  return Post
+}

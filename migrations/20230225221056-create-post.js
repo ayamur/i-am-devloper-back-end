@@ -9,32 +9,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        defaultValue: 'Untitled',
-      },
       profileId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Profiles',
-          key: 'id',
-        },
+        type: Sequelize.INTEGER
       },
-      reactorId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Profiles',
-          key: 'id',
-        }
+      image: {
+        type: Sequelize.STRING
       },
-      imageUrl: {
-        type: Sequelize.STRING,
-        allowNull: false,
+      caption: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
