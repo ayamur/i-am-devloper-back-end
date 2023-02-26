@@ -11,10 +11,10 @@ async function createPost(req, res) {
   }
 }
 
-async function createPost(req, res) {
+async function getPosts(req, res) {
   try {
-    const post = await Post.create(req.body)
-    res.status(200).json(post)
+    const posts = await Post.findAll()
+    res.status(200).json(posts)
   } catch (error) {
     console.log(error)
     res.status(500).json({ err: error })
@@ -23,5 +23,6 @@ async function createPost(req, res) {
 
 
 module.exports = {
-  createPost
+  createPost,
+  getPosts
 }

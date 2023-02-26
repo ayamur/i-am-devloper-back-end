@@ -10,6 +10,7 @@ const { decodeUserFromToken, checkAuth } = middleware
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
 router.post('/', checkAuth, postsCtrl.createPost)
+router.get('/', checkAuth, postsCtrl.getPosts )
 
 
-module.exports = router;
+module.exports = router
