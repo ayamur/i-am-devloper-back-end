@@ -28,9 +28,9 @@ const deletePost = async (req, res) => {
   try {
     const post = await Post.findByPk(req.params.id)
     if (post.profileId === req.user.profile.id){
-    await profile.destroy()
+    await post.destroy()
     }
-    res.status(200).json(meme)
+    res.status(200).json(post)
   } catch (error) {
     res.status(500).json(error)
   }
