@@ -2,7 +2,9 @@
 const { Model } = require('sequelize')
 const bcrypt = require('bcrypt')
 
+
 const SALT_ROUNDS = 6
+
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -14,7 +16,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       User.hasOne(models.Profile, { as: 'profile', foreignKey: 'userId' })
     }
-
+    comparePassword(tryPassword, cb) {
+      bcrypt.compare(tryPassword, this.dataValues.password, cb)
+    }
     comparePassword(tryPassword, cb) {
       bcrypt.compare(tryPassword, this.dataValues.password, cb)
     }
@@ -48,10 +52,10 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
   },
-  {
-    sequelize,
-    modelName: 'User',
-  })
+    {
+      sequelize,
+      modelName: 'User',
+    })
 
   User.beforeSave(async (user, options) => {
     if (!user.changed('password')) return
