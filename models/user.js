@@ -2,9 +2,7 @@
 const { Model } = require('sequelize')
 const bcrypt = require('bcrypt')
 
-
 const SALT_ROUNDS = 6
-
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -14,11 +12,16 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.hasOne(models.Profile, { as: 'profile', foreignKey: 'userId' })
+      User.hasOne(models.Profile, {
+        as: 'profile',
+        foreignKey: {
+          name: 'userId',
+          allowNull: false,
+          onDelete: 'CASCADE'
+        }
+      })
     }
-    comparePassword(tryPassword, cb) {
-      bcrypt.compare(tryPassword, this.dataValues.password, cb)
-    }
+
     comparePassword(tryPassword, cb) {
       bcrypt.compare(tryPassword, this.dataValues.password, cb)
     }

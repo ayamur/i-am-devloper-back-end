@@ -1,7 +1,6 @@
 'use strict'
 const { Model } = require('sequelize')
 
-
 module.exports = (sequelize, DataTypes) => {
   class Profile extends Model {
     /**
@@ -14,8 +13,9 @@ module.exports = (sequelize, DataTypes) => {
 
       Profile.belongsTo(models.User, { foreignKey: 'userId', onDelete: 'CASCADE' })
 
+
       Profile.hasMany(models.Post, {
-        as: 'post',
+        as: 'postCreate',
         foreignKey: 'profileId'
       })
     }
@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       references: {
         model: 'Users',
         key: 'id',
+        onDelete: "CASCADE"
       },
     },
   },

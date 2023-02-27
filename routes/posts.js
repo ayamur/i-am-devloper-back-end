@@ -1,7 +1,6 @@
 const router = require('express').Router()
 const postsCtrl = require('../controllers/posts.js')
 const middleware = require('../middleware/auth.js')
-const { route } = require('./profiles.js')
 
 const { decodeUserFromToken, checkAuth } = middleware
 

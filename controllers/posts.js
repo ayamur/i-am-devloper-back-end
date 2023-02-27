@@ -5,9 +5,9 @@ const { Post, Profile } = require('../models')
 
 const createPost = async (req, res) => {
   try {
-    const post = await Post.create(req.body)
-    const profile = await Profile.findOne({ where: { id: req.body.profileId } })
-    profile.addPost(post)
+    // const post = await Post.create(req.body)
+    const post = await Post.create({ profileId:req.user.id, ...req.body })
+    // const profile = await Profile.findOne({ where: { id: req.body.profileId } })
     res.status(200).json(post)
   } catch (error) {
     console.log(error)
@@ -18,7 +18,6 @@ const createPost = async (req, res) => {
 const getPosts = async (req, res) => {
   try {
     const posts = await Post.findAll()
-      .sort({ createAt: 'desc' })
     res.status(200).json(posts)
   } catch (error) {
     res.status(500).json(error)
@@ -27,23 +26,42 @@ const getPosts = async (req, res) => {
 
 const deletePost = async (req, res) => {
   try {
-    const postId = req.params.id
-    const post = await Post.findByOne({ where: { id: postId } })
-    if (post.profileId !== req.user.id) {
-      return res.status(403).json({ error: 'YOU SHALL NOT DELETE!... (unless you are the post creator)'})
+    const post = await Post.findByPk(req.params.id)
+    if (post.profileId === req.user.profile.id){
+    await profile.destroy()
     }
-    const deletedRows = await Post.destroy({ where: { id: postId }})
-    res.status(200).json(post)
+    res.status(200).json(meme)
   } catch (error) {
     res.status(500).json(error)
   }
 }
+
+// const deletePost = async (req, res) => {
+//   try {
+//     const postId = parseInt(req.params.id)
+//     const post = await Post.findOne({ where: { id: postId } });
+//     if (!post) {
+//       return res.status(404).json({ error: 'Post not found' });
+//     }
+//     const profile = await Profile.findOne({ where: { id: post.profileId } });
+//     if (profile.id !== req.user.id) {
+//       return res.status(403).json({ error: 'You are not authorized to delete this post' });
+//     }
+//     await Post.destroy();
+//     res.status(200).json({ message: 'Post deleted successfully' });
+//   } catch (error) {
+//     res.status(500).json(error);
+//   }
+// };
 
 // const showPost = async (req, res) => {
 //   try {
 //     const post = await Post.findOne({ 
 //       where: { id: req.params.id }, 
 //     })
+//     post.caption = req.body.caption;
+//     await post.save();
+
 //     res.status(200).json(post)
 //   } catch (error) {
 //     res.status(500).json(error)
