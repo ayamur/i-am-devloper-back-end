@@ -3,8 +3,7 @@ const profile = require('../models/profile')
 
 
 
-
-const createPost = async (req, res) => {
+async function createPost(req, res) {
   try {
     // const post = await Post.create(req.body)
     const post = await Post.create({ profileId: req.user.id, ...req.body })
@@ -16,7 +15,7 @@ const createPost = async (req, res) => {
   }
 }
 
-const getPosts = async (req, res) => {
+async function getPosts(req, res) {
   try {
     const posts = await Post.findAll()
     res.status(200).json(posts)
@@ -25,7 +24,7 @@ const getPosts = async (req, res) => {
   }
 }
 
-const deletePost = async (req, res) => {
+async function deletePost(req, res) {
   try {
     const post = await Post.findByPk(req.params.id)
     if (post.profileId === req.user.profile.id) {
@@ -37,7 +36,7 @@ const deletePost = async (req, res) => {
   }
 }
 
-const showPost = async (req, res) => {
+async function showPost(req, res)  {
   try {
     const post = await Post.findByPk(req.params.id)
     res.status(200).json(post)
@@ -46,7 +45,7 @@ const showPost = async (req, res) => {
   }
 }
 
-const updatePost = async (req, res) => {
+async function updatePost(req, res) {
   try {
     const post = await Post.findByPk(req.params.id)
     if (post.profileId !== req.user.id) {
@@ -59,6 +58,7 @@ const updatePost = async (req, res) => {
     res.status(500).json({ error });
   }
 }
+
 
 
 module.exports = {

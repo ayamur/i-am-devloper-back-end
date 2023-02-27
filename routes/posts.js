@@ -4,16 +4,20 @@ const middleware = require('../middleware/auth.js')
 
 const { decodeUserFromToken, checkAuth } = middleware
 
+
+
 /*---------- Public Routes ----------*/
+
 
 
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
-router.post( '/', checkAuth, postsCtrl.createPost )
-router.get( '/', checkAuth, postsCtrl.getPosts )
-router.delete( '/:id', checkAuth, postsCtrl.deletePost )
-router.get( '/:id', checkAuth, postsCtrl.showPost )
-router.put( '/:id', checkAuth, postsCtrl.updatePost )
+router.post('/', checkAuth, postsCtrl.createPost)
+router.get('/', checkAuth, postsCtrl.getPosts)
+router.delete('/:id', checkAuth, postsCtrl.deletePost)
+router.get('/:id', checkAuth, postsCtrl.showPost)
+router.put('/:id', checkAuth, postsCtrl.updatePost)
+
 
 
 module.exports = router

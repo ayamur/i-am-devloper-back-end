@@ -4,12 +4,17 @@ const middleware = require('../middleware/auth.js')
 
 const { decodeUserFromToken, checkAuth } = middleware
 
+
+
 /*---------- Public Routes ----------*/
+
 
 
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
 router.get('/', checkAuth, profilesCtrl.index)
 router.put('/:id/photo', checkAuth, profilesCtrl.addPhoto)
+
+
 
 module.exports = router

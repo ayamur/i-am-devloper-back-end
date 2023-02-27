@@ -1,16 +1,18 @@
 'use strict'
+
+
+
 const { Model } = require('sequelize')
 const bcrypt = require('bcrypt')
 
+
+
 const SALT_ROUNDS = 6
+
+
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       User.hasOne(models.Profile, {
         as: 'profile',
@@ -21,12 +23,10 @@ module.exports = (sequelize, DataTypes) => {
         }
       })
     }
-
     comparePassword(tryPassword, cb) {
       bcrypt.compare(tryPassword, this.dataValues.password, cb)
     }
   }
-
   User.init({
     name: {
       type: DataTypes.STRING,
@@ -59,7 +59,6 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'User',
     })
-
   User.beforeSave(async (user, options) => {
     if (!user.changed('password')) return
     try {
@@ -69,6 +68,5 @@ module.exports = (sequelize, DataTypes) => {
       console.error(error)
     }
   })
-
   return User
 }

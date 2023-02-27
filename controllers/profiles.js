@@ -1,6 +1,8 @@
 const { Profile } = require('../models')
 const cloudinary = require('cloudinary').v2
 
+
+
 async function index(req, res) {
   try {
     const profiles = await Profile.findAll()
@@ -16,7 +18,7 @@ async function addPhoto(req, res) {
     const imageFile = req.files.photo.path
     const profile = await Profile.findByPk(req.params.id)
     const image = await cloudinary.uploader.upload(
-      imageFile, 
+      imageFile,
       { tags: `${req.user.email}` }
     )
     profile.photo = image.url
@@ -28,4 +30,9 @@ async function addPhoto(req, res) {
   }
 }
 
-module.exports = { index, addPhoto }
+
+
+module.exports = {
+  index,
+  addPhoto
+}

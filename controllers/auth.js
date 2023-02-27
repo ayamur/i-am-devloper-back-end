@@ -1,6 +1,8 @@
 const { User, Profile } = require('../models')
 const jwt = require('jsonwebtoken')
 
+
+
 async function signup(req, res) {
   try {
     const user = await User.findOne({ where: { email: req.body.email } })
@@ -70,10 +72,17 @@ async function changePassword(req, res) {
   }
 }
 
-// /* --== Helper Functions ==-- */
 
+
+// /* --== Helper Functions ==-- */
 function createJWT(user) {
   return jwt.sign({ user }, process.env.SECRET, { expiresIn: '24h' })
 }
 
-module.exports = { signup, login, changePassword }
+
+
+module.exports = {
+  signup,
+  login,
+  changePassword
+}

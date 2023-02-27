@@ -17,7 +17,7 @@ module.exports = {
           key: 'id',
         }
       },
-      image: { 
+      image: {
         type: Sequelize.STRING
       },
       caption: {
@@ -31,9 +31,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Posts');
+    await queryInterface.dropTable('Posts')
   }
-};
+}
