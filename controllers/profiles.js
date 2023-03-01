@@ -8,7 +8,6 @@ async function index(req, res) {
     const profiles = await Profile.findAll()
     res.json(profiles)
   } catch (error) {
-    console.log(error)
     res.status(500).json({ err: error })
   }
 }
@@ -25,7 +24,7 @@ async function addPhoto(req, res) {
     await profile.save()
     res.status(201).json(profile.photo)
   } catch (error) {
-    console.log(error)
+    throw (error)
     res.status(500).json({ err: error })
   }
 }

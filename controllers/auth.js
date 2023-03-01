@@ -1,4 +1,5 @@
 const { User, Profile } = require('../models')
+
 const jwt = require('jsonwebtoken')
 
 
@@ -11,15 +12,18 @@ async function signup(req, res) {
     } else if (!process.env.SECRET) {
       throw new Error('no SECRET in .env file')
     } else {
+
       const user = await User.create(req.body)
       req.body.userId = user.id
+
       const profile = await Profile.create(req.body)
       user.dataValues.profile = { id: profile.dataValues.id }
+
       const token = createJWT(user)
       res.status(200).json({ token })
     }
   } catch (error) {
-    console.log(error)
+    throw (error)
     try {
       if (req.body.userId) {
         await User.destroy({ where: { id: req.body.userId } })
@@ -40,6 +44,7 @@ async function login(req, res) {
     if (!user) return res.status(401).json({ err: 'User not found' })
     user.comparePassword(req.body.password, (err, isMatch) => {
       if (isMatch) {
+
         const token = createJWT(user)
         res.json({ token })
       } else {
@@ -47,7 +52,7 @@ async function login(req, res) {
       }
     })
   } catch (error) {
-    console.log(error)
+    throw (error)
     res.status(500).json({ err: error })
   }
 }
@@ -61,13 +66,14 @@ async function changePassword(req, res) {
         user.password = req.body.newPassword
         await user.save()
         const token = createJWT(user)
+
         res.json({ token })
       } else {
         res.status(401).json({ err: 'Incorrect password' })
       }
     })
   } catch (error) {
-    console.log(error)
+    throw (error)
     res.status(500).json({ err: error })
   }
 }

@@ -65,7 +65,7 @@ module.exports = (sequelize, DataTypes) => {
       const hash = await bcrypt.hash(user.dataValues.password, SALT_ROUNDS)
       user.password = hash
     } catch (error) {
-      console.error(error)
+      throw (error)
     }
   })
   return User
