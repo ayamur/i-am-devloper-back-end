@@ -5,9 +5,7 @@ const profile = require('../models/profile')
 
 async function createPost(req, res) {
   try {
-    // const post = await Post.create(req.body)
     const post = await Post.create({ profileId: req.user.id, ...req.body })
-    // const profile = await Profile.findOne({ where: { id: req.body.profileId } })
     res.status(200).json(post)
   } catch (error) {
     console.log(error)
@@ -24,15 +22,15 @@ async function getPosts(req, res) {
   }
 }
 
-async function deletePost(req, res) {
+const deletePost = async (req, res) => {
   try {
-    const post = await Post.findByPk(req.params.id)
-    if (post.profileId === req.user.profile.id) {
-      await post.destroy()
-    }
-    res.status(200).json(post)
+    const numberOfRowsRemoved = await
+    Post.destroy(
+      {where: {id: req.params.id}}
+    )
+    res.status(200).json(numberOfRowsRemoved)
   } catch (error) {
-    res.status(500).json(error)
+    console.log(error);
   }
 }
 
@@ -58,8 +56,6 @@ async function updatePost(req, res) {
     res.status(500).json({ error });
   }
 }
-
-
 
 module.exports = {
   createPost,
